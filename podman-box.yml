@@ -1,0 +1,34 @@
+---
+- hosts: default
+  remote_user: vagrant
+  become: true
+  become_method: sudo
+  become_user: root
+
+  vars:
+    user: vagrant
+    uid: 1000
+
+  tasks:
+    - name: install podman
+      become: true
+      yum:
+        name: podman
+        state: present
+        enablerepo: updates-testing
+
+    - name: enable linger
+      command: 'loginctl enable-linger {{ user }}'
+      args:
+        creates: '/var/lib/systemd/linger/{{ user }}'
+
+    - name: enable and start podman remote socket
+      become_user: '{{ user }}'
+      systemd:
+        name: podman.socket
+        scope: user
+        enabled: true
+        state: started
+      environment:
+        XDG_RUNTIME_DIR: '/run/user/{{ uid }}'
+...
