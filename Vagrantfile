@@ -20,7 +20,8 @@ end
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "fedora/32-cloud-base"
+  #config.vm.box = "fedora/32-cloud-base"
+  config.vm.box = "generic/fedora33"
 
   config.vm.hostname = PODMAN_BOX_HOSTNAME
   config.vm.network "private_network", ip: PODMAN_BOX_IP, hostname: true
@@ -48,11 +49,14 @@ Vagrant.configure("2") do |config|
     trigger.info = "*** podman remote info: ***"
     #trigger.run = {inline: "bash -c 'echo \"podman ip = $PODMAN_BOX_IP\"'"}
     trigger.ruby do |env,machine|
+      puts "\n\e[;32m** active config options (specify before `vagrant up` to change) **\e[0m"
       puts "PODMAN_BOX_IP        = #{PODMAN_BOX_IP}"
       puts "PODMAN_BOX_HOSTNAME  = #{PODMAN_BOX_HOSTNAME}"
       puts "PODMAN_BOX_MEMORY_MB = #{PODMAN_BOX_MEMORY_MB}"
-      puts "#{machine.ssh_info}"
-      puts "#{machine.config.vm.to_json}"
+      puts "\n\e[1;34m** local config commands **\e[0m"
+      puts "export CONTAINER_SSHKEY=#{machine.ssh_info[:private_key_path][0]}"
+      puts "export CONTAINER_HOST=ssh://#{machine.ssh_info[:remote_user]}@#{machine.ssh_info[:host]}:#{machine.ssh_info[:port]}/run/user/1000/podman/podman.sock"
+      puts "podman system connection add #{machine.ssh_info[:remote_user]} --identity $CONTAINER_SSHKEY $CONTAINER_HOST"
     end
   end
 end
