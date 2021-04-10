@@ -1,0 +1,21 @@
+---
+name: CI
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  schedule:
+    - cron: "0 4 * * 5"
+
+jobs:
+  integration:
+    name: integration
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          brew install podman
+          vagrant update
+          podman info
+          
