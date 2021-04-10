@@ -1,5 +1,7 @@
 # podman-box
 
+![CI](https://github.com/deversmann/podman-box/actions/workflows/ci.yml/badge.svg)
+
 ## Description
 
 "Containers are Linux!" So how does Docker run on a Mac?  Well, the dirty little secret is: while you aren't looking, it spins up a VM in the background running Linux and hosting your containers.
