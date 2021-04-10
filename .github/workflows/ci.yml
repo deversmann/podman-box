@@ -13,12 +13,23 @@ jobs:
     name: integration
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
+      - name: Checkout the codebase.
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
           brew install podman
           sudo pip3 install ansible
-          vagrant up
+
+      - name: Start vagrant
+        run: vagrant up
+
+      - name: Configure podman
+        run: |
           export CONTAINER_SSHKEY=$PWD/.vagrant/machines/default/virtualbox/private_key
           export CONTAINER_HOST=ssh://vagrant@127.0.0.1:2222/run/user/1000/podman/podman.sock
           podman system connection add vagrant --identity $CONTAINER_SSHKEY $CONTAINER_HOST
+      
+      - name: Test connectivity
+        run: |
           podman info

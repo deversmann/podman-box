@@ -33,10 +33,16 @@ podman system connection add vagrant --identity $CONTAINER_SSHKEY $CONTAINER_HOS
 
 If this is the only connection you've added to podman, it will be the default and you can use it directly in all `podman` commands.  If you've added other connections, then you know how to select this one.
 
+## Pros and Cons
+
+
+| Pros | Cons |
+|--|--|
+| Easy to get container workflows going from the mac terminal | Doesn't handle forwarding ports back to the mac |
+
+
 ### Notes to not forget
-##### (Things not readily obvious that took forever to figure out the first time... and maybe the second too)
-- An error like this
-    `Error: cannot connect to the Podman socket, please verify that Podman REST API service is running: server API version is too old. Client "3.0.0" server "2.0.0"`
-    means that there is an incompatible version mismatch between the "local" podman and the "remote" podman. Podman seems to like to frequently completely break compatibility between versions.
+#### (Things not readily obvious that took forever to figure out the first time... and maybe the second too)
+- An error like this, `Error: cannot connect to the Podman socket, please verify that Podman REST API service is running: server API version is too old. Client "3.0.0" server "2.0.0"` means that there is an incompatible version mismatch between the "local" podman and the "remote" podman. Podman seems to like to frequently completely break compatibility between versions.
 - The `enable-linger` directive in the playbook is really important!  It's what allows the user-defined socket to remain available when the user is not logged in.
 - Some pretty decent info lives here: https://github.com/containers/podman/blob/master/docs/tutorials/mac_win_client.md
