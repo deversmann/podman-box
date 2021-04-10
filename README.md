@@ -15,7 +15,7 @@ This project aims to make it easy to do the same, but using Podman (and other op
 
 All three can be installed using Homebrew:
 ```bash
-brew cask install vagrent virtualbox
+brew cask install vagrant virtualbox
 brew install podman 
 ```
 
