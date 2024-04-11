@@ -1,3 +1,5 @@
+# :warning: This Project is archived as [podman-machine](https://docs.podman.io/en/stable/markdown/podman-machine.1.html) exists :warning:
+
 # podman-box
 
 ![CI](https://github.com/deversmann/podman-box/actions/workflows/ci.yml/badge.svg)
